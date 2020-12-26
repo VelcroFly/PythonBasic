@@ -14,7 +14,3 @@ values = [i for i in range(100, 1001) if i % 2 == 0]
 a = reduce(reducer_func, values)
 print(a)
 
-# values = [1, 2, 3, 1, 10]
-#
-# a = reduce(reducer_func, values)
-# print(a)

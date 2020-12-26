@@ -6,7 +6,10 @@
 
 
 def factorial(value):
-    yield [i*i for i in range(1, value)]
+    res = 1
+    for i in range(1, value + 1):
+        res *= i
+        yield res
 
 
 if __name__ == '__main__':
