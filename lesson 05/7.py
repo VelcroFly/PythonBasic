@@ -38,13 +38,3 @@ with open('firms.txt', 'r') as file:
 
     with open('7 res.txt', 'w') as res_file:
         res_file.write(json.dumps(firms_list))
-
-
-
-
-
-
-
-
-
-
