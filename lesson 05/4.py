@@ -9,12 +9,21 @@ Four — 4
 
 numbers_dict = {'1': 'Один', '2': 'Два', '3': 'Три', '4': 'Четыре'}
 
-with open('numbers.txt', 'r') as file:
-    output_file_content = ''
-    for line in file:
-        line = line.split(' - ')
-        print(line)
-        output_file_content += f'{numbers_dict[line[1].strip()]} - {line[1]}'
+# with open('numbers.txt', 'r') as file:
+#     output_file_content = ''
+#     for line in file:
+#         line = line.split(' - ')
+#         print(line)
+#         output_file_content += f'{numbers_dict[line[1].strip()]} - {line[1]}'
+#
+# with open('numbers_output.txt', 'w', encoding='utf-8') as file:
+#     file.write(output_file_content)
 
-with open('numbers_output.txt', 'w', encoding='utf-8') as file:
-    file.write(output_file_content)
+with open('numbers.txt', 'r') as input_file:
+    with open('numbers_output.txt', 'w', encoding='utf-8') as output_file:
+        output_file_content = ''
+        for line in input_file:
+            line = line.split(' - ')
+            print(line)
+            output_file.write(f'{numbers_dict[line[1].strip()]} - {line[1]}')
+
