@@ -25,4 +25,3 @@ with open('numbers.txt', 'r') as input_file:
         for line in input_file:
             line = line.split(' - ')
             output_file.write(f'{numbers_dict[line[1].strip()]} - {line[1]}')
-

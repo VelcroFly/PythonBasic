@@ -21,9 +21,3 @@ with open('5.txt', 'r') as file:
         sm += float(i)
 
 print(sm)
-
-
-
-
-
-
