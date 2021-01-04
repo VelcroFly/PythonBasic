@@ -10,14 +10,27 @@ import time
 и при его нарушении выводить соответствующее сообщение и завершать скрипт."""
 
 
+class TextColors:
+    GREEN = '\033[92m'
+    YELLOW = '\033[93m'
+    RED = '\033[91m'
+
+
 class TrafficLight:
 
     def __init__(self, color):
         self.__color = color
 
     def change_color(self, new_color):
-        self.__color = new_color
-        print(f'{self.__color} color phase')
+        if new_color == 'Red':
+            self.__color = new_color
+            print(f'{TextColors.RED}{self.__color} color phase{TextColors.RED}')
+        if new_color == 'Yellow':
+            self.__color = new_color
+            print(f'{TextColors.YELLOW}{self.__color} color phase{TextColors.YELLOW}')
+        if new_color == 'Green':
+            self.__color = new_color
+            print(f'{TextColors.GREEN}{self.__color} color phase{TextColors.GREEN}')
 
     def running(self):
         while True:
