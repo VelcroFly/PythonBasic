@@ -33,15 +33,18 @@ class TrafficLight:
             print(f'{TextColors.GREEN}{self.__color} color phase{TextColors.GREEN}')
 
     def running(self):
+        self.change_color('Red')
+        time.sleep(7)
+        self.change_color('Yellow')
+        time.sleep(2)
+        self.change_color('Green')
+        time.sleep(7)
+
+    def main_cycle(self):
         while True:
-            self.change_color('Red')
-            time.sleep(7)
-            self.change_color('Yellow')
-            time.sleep(2)
-            self.change_color('Green')
-            time.sleep(7)
+            self.running()
 
 
 if __name__ == '__main__':
     traffic_light = TrafficLight('Red')
-    traffic_light.running()
+    traffic_light.main_cycle()
