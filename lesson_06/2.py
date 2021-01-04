@@ -7,10 +7,18 @@
 
 
 class Road:
+    weight = 25
+    thickness = 5
 
     def __init__(self, length, width):
         self._length = length
         self._width = width
 
-    def calc_weight(self):
-        pass
+    def calc_mass(self):
+        return (self._length * self._width * self.weight * self.thickness) / 1000
+
+
+if __name__ == '__main__':
+    road = Road(20, 5000)
+    print(road.calc_mass())
+
