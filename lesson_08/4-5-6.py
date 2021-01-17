@@ -24,13 +24,20 @@ class Warehouse:
             'Сканнер': 0,
             'МФУ': 0
         }
+        self.serial_numbers = list()
 
     def receive(self, oe_unit):
-        oe_unit.location = 'На складе'
-        self.oe_count[oe_unit.oe_type] += 1
-        return f'{oe_unit.oe_type} {oe_unit.manufacturer} приехал на склад.'
+        if oe_unit.serial_number not in self.serial_numbers:
+            self.serial_numbers.append(oe_unit.serial_number)
+            oe_unit.location = 'На складе'
+            self.oe_count[oe_unit.oe_type] += 1
+            return f'{oe_unit.oe_type} {oe_unit.manufacturer} s/n {oe_unit.serial_number} приехал на склад.'
+        else:
+            return f'{oe_unit.oe_type} {oe_unit.manufacturer} s/n {oe_unit.serial_number} уже учтен на складе.' \
+                   f' Прием невозможен.'
 
     def give_out(self, oe_unit, new_location):
+        self.serial_numbers.remove(oe_unit.serial_number)
         self.oe_count[oe_unit.oe_type] -= 1
         oe_unit.location = new_location
         return f'{oe_unit.oe_type} {oe_unit.manufacturer} отправился в {new_location}'
@@ -38,7 +45,7 @@ class Warehouse:
 
 class OfficeEquipment(ABC):
 
-    def __init__(self, oe_type, manufacturer):
+    def __init__(self, oe_type, manufacturer, serial_number):
         self.types_dict = {
             1: 'Принтер',
             2: 'Сканнер',
@@ -50,6 +57,7 @@ class OfficeEquipment(ABC):
             print('Задан некорректный тип оргтехники')
         self.manufacturer = manufacturer
         self.location = str()
+        self.serial_number = serial_number
 
     @abstractmethod
     def do_job(self):
@@ -80,7 +88,11 @@ class MFU(OfficeEquipment):
 if __name__ == '__main__':
     warehouse = Warehouse('г. Москва, ул. Пушкина')
 
-    printer = Printer(1, 'Epson')
-    print(warehouse.receive(printer))
-    print(warehouse.receive(printer))
+    printer_1 = Printer(1, 'Epson', '23-sn')
+    printer_2 = Printer(1, 'Epson', '24-sn')
+    print(warehouse.receive(printer_1))
+    print(warehouse.receive(printer_1))
+    print(warehouse.receive(printer_2))
+    print(warehouse.oe_count['Принтер'])
+    print(warehouse.give_out(printer_2, 'Калуга'))
     print(warehouse.oe_count['Принтер'])
