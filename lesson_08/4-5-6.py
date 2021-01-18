@@ -25,6 +25,17 @@ class Warehouse:
             'МФУ': 0
         }
         self.serial_numbers = list()
+        self.available_locations = ['МОСКВА', 'КАЛУГА', 'ВЛАДИВОСТОК']
+
+    def add_available_location(self, new_location):
+        if new_location.upper() not in self.available_locations:
+            self.available_locations.append(new_location.upper())
+            print(f'{new_location} добавлена в справочник.')
+        else:
+            print(f'{new_location} уже есть в справочнике.')
+
+    def check_destination(self, new_location):
+        return True if new_location.upper() in self.available_locations else False
 
     def receive(self, oe_unit):
         if oe_unit.serial_number not in self.serial_numbers:
@@ -37,10 +48,13 @@ class Warehouse:
                    f' Прием невозможен.'
 
     def give_out(self, oe_unit, new_location):
-        self.serial_numbers.remove(oe_unit.serial_number)
-        self.oe_count[oe_unit.oe_type] -= 1
-        oe_unit.location = new_location
-        return f'{oe_unit.oe_type} {oe_unit.manufacturer} отправился в {new_location}'
+        if self.check_destination(new_location):
+            self.serial_numbers.remove(oe_unit.serial_number)
+            self.oe_count[oe_unit.oe_type] -= 1
+            oe_unit.location = new_location
+            return f'{oe_unit.oe_type} {oe_unit.manufacturer} отправился в {new_location}'
+        else:
+            return f'{new_location} - недопустимый пункт отправки'
 
 
 class OfficeEquipment(ABC):
@@ -95,4 +109,6 @@ if __name__ == '__main__':
     print(warehouse.receive(printer_2))
     print(warehouse.oe_count['Принтер'])
     print(warehouse.give_out(printer_2, 'Калуга'))
+    print(warehouse.give_out(printer_2, 'Тверь'))
     print(warehouse.oe_count['Принтер'])
+    print(printer_2.location)
